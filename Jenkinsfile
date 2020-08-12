@@ -42,7 +42,7 @@ pipeline {
              ls -Alht
              terraform output
            
-             """"
+             """
       }
     
     }
