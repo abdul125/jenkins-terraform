@@ -6,7 +6,7 @@ pipeline {
     }
   }
   environment {
-    CREDS = credentials('abdul-creds')
+    CREDS = credentials('abdul-aws-creds')
     AWS_ACCESS_KEY_ID = "${CREDS_USR}"
     AWS_SECRET_ACCESS_KEY = "${CREDS_PSW}"
     OWNER = "abdul"
@@ -23,6 +23,7 @@ pipeline {
       stage("workspace") {
           steps {
               sh """
+terraform workspace list
 terraform workspace select jenkins-lab-2
 if [[ \$? -ne 0 ]]; then
   terraform workspace new jenkins-lab-2
