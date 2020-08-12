@@ -184,8 +184,8 @@ resource "aws_instance" "api" {
   key_name                    = aws_key_pair.lab_keypair.id
   associate_public_ip_address = true
     tags = {
-    Name  = "api"
-    type  = "api"
+    Name  = "abdu-api"
+    type  = "abdul-api"
     owner = var.name
   }
 
@@ -193,6 +193,10 @@ resource "aws_instance" "api" {
     #:/ private i think: but tryign anyway
     command = "echo ${aws_instance.api.0.public_ip} >> public_ip.txt"
   }
+   inline = [
+        "ls -a",
+        "cat public_ip.txt"
+        ]
 
 }
 
