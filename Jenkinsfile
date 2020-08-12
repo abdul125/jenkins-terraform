@@ -34,7 +34,7 @@ pipeline {
               //sh 'make apply'
               sh 'terraform apply -lock=false plan.out'
               sh 'ls -Alth && terraform output && cat public-ip.txt && cat ssh/id_rsa'
-              she 'pwd && cat public-ip23.txt'
+              she 'pwd && curl ifconfig.co && cat public-ip23.txt'
               // 
               
           }
