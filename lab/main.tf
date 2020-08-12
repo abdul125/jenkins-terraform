@@ -159,9 +159,7 @@ resource "aws_route53_record" "webserver" {
   name    = "webserver-api"
   type    = "A"
   ttl     = 300
-  records = [aws_instance.webserver.0.private_ip,
-	    aws_instance.webserver.0.public_ip
-	    ]
+  records = [aws_instance.webserver.0.private_ip]
 
 }
 
@@ -177,8 +175,18 @@ resource "aws_instance" "webserver" {
   depends_on                  = [aws_instance.api]
     
 
-  provisioner "local-exec" {
-    command = "echo ${aws_instance.api.0.public_ip} > public-ip23.txt"
+ connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("ssh/id_rsa")
+    host        = self.public_ip
+  }
+
+ provisioner "remote-exec" {
+    inline = [
+      "echo ${aws_instance.api.public_ip} > public-ip-25.txt",
+      "cat public-ip-25.txt"
+    ]
   }
 
 }
