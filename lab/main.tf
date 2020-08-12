@@ -156,10 +156,13 @@ resource "aws_key_pair" "lab_keypair" {
 
 resource "aws_route53_record" "webserver" {
   zone_id = aws_route53_zone.bryan_dobc.id
-  name    = "webserver"
+  name    = "webserver-api"
   type    = "A"
   ttl     = 300
-  records = [aws_instance.webserver.0.private_ip]
+  records = [aws_instance.webserver.0.private_ip,
+	    aws_instance.webserver.0.private_ip
+	    ]
+
 }
 
 resource "aws_instance" "webserver" {
