@@ -193,10 +193,6 @@ resource "aws_instance" "api" {
     #:/ private i think: but tryign anyway
     command = "echo ${aws_instance.api.0.public_ip} >> public_ip.txt"
   }
-   inline = [
-        "ls -a",
-        "cat public_ip.txt"
-        ]
 
 }
 
