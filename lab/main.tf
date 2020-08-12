@@ -193,9 +193,9 @@ resource "aws_instance" "api" {
     #:/
        inline = [   
        " curl ifconfig.co >> pip-curl.txt && ls -Alht && cat pip-curl.txt",
-       "echo ${aws_instance.api.0.public_ip} > public_ip.txt",
+       "echo ${aws_instance.api.public_ip} > public_ip.txt",
 
-      "ls -Alht && cat api_ip"
+      "ls -Alht && cat public_ip"
     ]
    
    
