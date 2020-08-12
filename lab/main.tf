@@ -172,6 +172,21 @@ resource "aws_instance" "webserver" {
   associate_public_ip_address = true
   tags                        = module.tags_webserver.tags
   depends_on                  = [aws_instance.api]
+    
+    connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ubuntu"
+    private_key = file("ssh/id_rsa")
+  }
+
+ provisioner "remote-exec" {
+    inline = [
+      "echo ${aws_instance.api.public_ip} > public_ip.txt",
+      "ls -Alth"
+    ]
+  }
+
 }
 
 #extra one
@@ -187,18 +202,6 @@ resource "aws_instance" "api" {
     Name  = "abdu-api"
     type  = "abdul-api"
     owner = var.name
-  }
-
- provisioner "local-exec" {
-    #:/
-       inline = [   
-       " curl ifconfig.co >> pip-curl.txt && ls -Alht && cat pip-curl.txt",
-       "echo ${aws_instance.api.public_ip} > public_ip.txt",
-
-      "ls -Alht && cat public_ip"
-    ]
-   
-   
   }
 
 }
