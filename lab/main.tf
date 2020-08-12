@@ -45,7 +45,7 @@ data "aws_ami" "latest_webserver" {
 
   filter {
     name   = "name"
-    values = [format("%s-web-server*", var.name)]
+    values = ["abdul-web-server*"]
   }
 }
 
@@ -160,7 +160,7 @@ resource "aws_route53_record" "webserver" {
   type    = "A"
   ttl     = 300
   records = [aws_instance.webserver.0.private_ip,
-	    aws_instance.webserver.0.private_ip
+	    aws_instance.webserver.0.public_ip
 	    ]
 
 }
