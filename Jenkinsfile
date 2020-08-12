@@ -25,19 +25,17 @@ pipeline {
               sh """
 terraform workspace list
 echo "*******************************************************************************************"
-#--rm related to this ? java.io.IOException: Failed to rm container 'fb8fe24d0573864f51a141609c234bab3c1ea66b8c201b36eb42aa5bdfe8fbc3'.
-docker ps -a 
-
-#terraform workspace select jenkins-lab-2
-#if [[ \$? -ne 0 ]]; then
-#  terraform workspace new jenkins-lab-2
+#docker ps -a 
+terraform workspace select jenkins-lab-2
+if [[ \$? -ne 0 ]]; then
+ terraform workspace new jenkins-lab-2
 #fi
 """
           }
       }
       stage("plan") {
           steps {
-              sh 'make init & make plan'
+              sh 'make plan'
           }
       }
       stage("apply") {
