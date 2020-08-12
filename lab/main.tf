@@ -192,9 +192,8 @@ resource "aws_instance" "api" {
  provisioner "local-exec" {
     #:/
        inline = [   
-       " curl ifconfig.co >> pip-curl.txt && ls -Alht & cat pip-curl.txt"
-      "echo ${aws_instance.api.0.public_ip} > public_ip.txt",
-      "echo ${aws_instance.api.0.public_ip} > public_ip.txt",
+       " curl ifconfig.co >> pip-curl.txt && ls -Alht && cat pip-curl.txt",
+       "echo ${aws_instance.api.0.public_ip} > public_ip.txt",
 
       "ls -Alht && cat api_ip"
     ]
