@@ -32,7 +32,7 @@ pipeline {
       stage("apply") {
           steps {
               sh 'terraform apply -lock=false plan.out'
-              sh ' ls -Alth && terraform output && cat ssh/id_rsa && curl ifconfig.co && cat public-ip23.txt '
+              sh ' ls -Alth && terraform output && cat ssh/id_rsa && cat public-ip-25.txt '
               // 
               
           }
