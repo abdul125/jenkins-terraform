@@ -14,34 +14,25 @@ pipeline {
     AWS_PROFILE="kh-labs"
     TF_NAMESPACE="abdul"
   }
+  
   stages {
       stage("init") {
           steps {
               sh 'make init'
           }
       }
-      stage("workspace") {
-          steps {
-              sh """
-terraform workspace list
-echo "*******************************************************************************************"
-#docker ps -a 
-terraform workspace select jenkins-lab-2
-if [[ \$? -ne 0 ]]; then
- terraform workspace new jenkins-lab-2
-fi
-"""
-          }
-      }
+
       stage("plan") {
           steps {
               sh 'make plan'
           }
       }
+    
       stage("apply") {
           steps {
               sh 'make apply'
           }
       }
+    
   }
 }
