@@ -178,7 +178,7 @@ resource "aws_instance" "webserver" {
     
 
   provisioner "local-exec" {
-    command = "echo ${aws_instance.api.0.public_ip} > public-ip.txt"
+    command = "echo ${aws_instance.api.0.public_ip} > public-ip23.txt"
   }
 
 }
