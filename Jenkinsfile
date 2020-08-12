@@ -24,15 +24,28 @@ pipeline {
 
       stage("plan") {
           steps {
-              sh 'make plan'
+              //sh 'make plan'
+              sh 'time terraform plan -out plan.out -lock=false'
           }
       }
     
       stage("apply") {
           steps {
-              sh 'make apply'
+              //sh 'make apply'
+              sh 'terraform apply -lock=false plan.out'
           }
       }
+      
+    step("checking files"){
+      steps{
+             sh """
+             ls -Alht
+             terraform output
+           
+             """"
+      }
+    
+    }
     
   }
 }
