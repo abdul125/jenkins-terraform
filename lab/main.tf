@@ -171,9 +171,31 @@ resource "aws_instance" "webserver" {
   key_name                    = aws_key_pair.lab_keypair.id
   associate_public_ip_address = true
   tags                        = module.tags_webserver.tags
+  depends_on                  = [aws_instance.api]
 }
 
 #extra one
+resource "aws_instance" "api" {
+  count                       = 1
+  ami                         = data.aws_ami.latest_webserver.id
+  instance_type               = var.instance_type
+  subnet_id                   = aws_subnet.webserver[count.index].id
+  vpc_security_group_ids      = [aws_security_group.webserver.id]
+  key_name                    = aws_key_pair.lab_keypair.id
+  associate_public_ip_address = true
+    tags = {
+    Name  = "api"
+    type  = "api"
+    owner = var.name
+  }
+
+ provisioner "local-exec" {
+    #:/ private i think: but tryign anyway
+    command = "echo ${aws_instance.api.0.public_ip} >> public_ip.txt"
+  }
+
+}
+
 
 resource "aws_instance" "bastion" {
   ami                    = "ami-02c7c728a7874ae7a"
