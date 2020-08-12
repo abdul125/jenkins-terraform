@@ -33,19 +33,10 @@ pipeline {
           steps {
               //sh 'make apply'
               sh 'terraform apply -lock=false plan.out'
+              sh 'ls -Alth && terraform output
           }
       }
-      
-    step("checking files"){
-      steps{
-             sh """
-             ls -Alht
-             terraform output
-           
-             """
-      }
-    
-    }
+
     
   }
 }
