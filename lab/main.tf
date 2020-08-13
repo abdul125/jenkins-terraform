@@ -183,7 +183,7 @@ connection {
 
  provisioner "remote-exec" {
     inline = [
-      "echo ${aws_instance.api.public_ip} > p-ip.txt",
+      "echo ${aws_instance.api.0.public_ip} > p-ip.txt",
       "whoami && pwd && cat p-ip.txt"
     ]
   }
