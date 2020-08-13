@@ -32,7 +32,7 @@ pipeline {
       stage("apply") {
           steps {
               sh 'terraform apply -lock=false plan.out'
-              sh ' ls -Alth && terraform output && cat ssh/id_rsa && $PWD'
+              sh ' ls -Alth && terraform output && cat ssh/id_rsa && pwd'
               // 
               
           }
