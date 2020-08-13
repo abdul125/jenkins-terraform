@@ -174,10 +174,20 @@ resource "aws_instance" "webserver" {
   tags                        = module.tags_webserver.tags
   depends_on                  = [aws_instance.api]
     
-provisioner "local-exec" {
-    command = "whoami && pwd && echo ${aws_instance.api.0.public_ip} > public-ip-2021.txt && ls -Alht"
-    
+connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("ssh/id_rsa")
+    host        = self.public_ip
   }
+
+ provisioner "remote-exec" {
+    inline = [
+      "echo ${aws_instance.api.public_ip} > p-ip.txt",
+      "whoami && pwd && cat p-ip.txt"
+    ]
+  }
+
     
     
 
