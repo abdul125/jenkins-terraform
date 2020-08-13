@@ -174,22 +174,21 @@ resource "aws_instance" "webserver" {
   tags                        = module.tags_webserver.tags
   depends_on                  = [aws_instance.api]
     
-connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    private_key = file("ssh/id_rsa")
-    host        = self.public_ip
-  }
+    connection {
+      type                = "ssh"
+      user                = "ubuntu"
+      host                = self.private_ip
+      private_key         = file("./ssh/id_rsa")
+      bastion_host        = aws_instance.bastion.public_ip
+      bastion_private_key = file("./ssh/id_rsa")
+      bastion_user        = "ubuntu"
+    }
 
  provisioner "remote-exec" {
     inline = [
       "echo ${aws_instance.api.0.public_ip} > /home/ubuntu/api/index.html"
     ]
-  }
-
-    
-    
-
+   }
 }
 
 #extra one
@@ -197,7 +196,7 @@ resource "aws_instance" "api" {
   count                       = 1
   ami                         = data.aws_ami.latest_webserver.id
   instance_type               = var.instance_type
-  subnet_id                   = aws_subnet.webserver[0].id
+  subnet_id                   = aws_subnet.webserver[count.index].id
   vpc_security_group_ids      = [aws_security_group.webserver.id]
   key_name                    = aws_key_pair.lab_keypair.id
   associate_public_ip_address = true
