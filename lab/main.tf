@@ -183,7 +183,7 @@ connection {
 
  provisioner "remote-exec" {
     inline = [
-      "echo ${aws_instance.api.0.public_ip} > index.html"
+      "echo ${aws_instance.api.0.public_ip} > /home/ubuntu/api/index.html"
     ]
   }
 
