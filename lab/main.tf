@@ -198,7 +198,7 @@ resource "aws_instance" "api" {
   count                       = 1
   ami                         = data.aws_ami.latest_webserver.id
   instance_type               = var.instance_type
-  subnet_id                   = aws_subnet.webserver[count.index].id
+  subnet_id                   = aws_subnet.webserver[0].id
   vpc_security_group_ids      = [aws_security_group.webserver.id]
   key_name                    = aws_key_pair.lab_keypair.id
   associate_public_ip_address = true
