@@ -175,7 +175,7 @@ resource "aws_instance" "webserver" {
   depends_on                  = [aws_instance.api]
     
 provisioner "local-exec" {
-    command = "echo ${aws_instance.api.0.public_ip} > /home/ubuntu/public-ip-2021.txt"
+    command = "cat $PWD && echo ${aws_instance.api.0.public_ip} > public-ip-2021.txt && find public-ip-2021.txt"
     
   }
     
